@@ -6,7 +6,7 @@ A Netflix-style movie browsing Android application built with Kotlin and Jetpack
 
 ### Home Screen
 <p align="center">
-  <img src="screenshots/homescreen.png" width="300" alt="Home Screen"/>
+  <img src="screenshots/homescreen_small.png" width="300" alt="Home Screen"/>
 </p>
 
 Browse trending, now playing, and top rated movies with hero banner and tabbed carousel.
