@@ -4,10 +4,15 @@ A Netflix-style movie browsing Android application built with Kotlin and Jetpack
 
 ## Screenshots
 
-| Home Screen | Trailer Player |
-|:---:|:---:|
-| ![Home Screen](screenshots/homescreen.png) | ![Trailer Player](screenshots/trailer.png) |
-| **Home** - Browse trending, now playing, and top rated movies with hero banner and tabbed carousel | **Trailer** - Watch YouTube trailers directly in-app using youtube-player library |
+### Home Screen
+![Home Screen](screenshots/homescreen.png)
+
+Browse trending, now playing, and top rated movies with hero banner and tabbed carousel.
+
+### Trailer Player
+![Trailer Player](screenshots/trailer.png)
+
+Watch YouTube trailers directly in-app using youtube-player library.
 
 ## Features
 
