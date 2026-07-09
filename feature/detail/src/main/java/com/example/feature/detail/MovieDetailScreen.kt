@@ -1,9 +1,6 @@
 package com.example.feature.detail
 
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -477,9 +474,6 @@ private fun YoutubePlayerOverlay(
     videoKey: String,
     onClose: () -> Unit
 ) {
-    val context = androidx.compose.ui.platform.LocalContext.current
-    var hasError by remember { mutableStateOf(false) }
-
     BackHandler(onBack = onClose)
 
     Box(
@@ -487,83 +481,30 @@ private fun YoutubePlayerOverlay(
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        if (hasError) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.Center)
-                    .padding(32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.PlayArrow,
-                    contentDescription = null,
-                    modifier = Modifier.size(64.dp),
-                    tint = Color(0xFFE50914)
-                )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Video tidak dapat diputar di sini",
-                    color = Color.White,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Video ini tidak mengizinkan pemutaran di embedded player",
-                    color = Color.Gray,
-                    fontSize = 13.sp
-                )
-                Spacer(modifier = Modifier.height(24.dp))
-                androidx.compose.material3.Button(
-                    onClick = {
-                        val intent = android.content.Intent(
-                            android.content.Intent.ACTION_VIEW,
-                            android.net.Uri.parse("https://www.youtube.com/watch?v=$videoKey")
-                        )
-                        context.startActivity(intent)
-                    },
-                    colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFE50914)
-                    )
-                ) {
-                    Text("Buka di YouTube", color = Color.White, fontWeight = FontWeight.Bold)
-                }
-            }
-        } else {
-            AndroidView(
-                factory = { ctx ->
-                    WebView(ctx).apply {
-                        layoutParams = ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT
-                        )
-                        webChromeClient = WebChromeClient()
-                        webViewClient = object : WebViewClient() {
-                            override fun onReceivedError(
-                                view: WebView?,
-                                errorCode: Int,
-                                description: String?,
-                                failingUrl: String?
-                            ) {
-                                hasError = true
-                            }
+        AndroidView(
+            factory = { ctx ->
+                com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView(ctx).apply {
+                    enableAutomaticInitialization = false
+                    addYouTubePlayerListener(object : com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener() {
+                        override fun onReady(youTubePlayer: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer) {
+                            youTubePlayer.loadVideo(videoKey, 0f)
                         }
-                        settings.javaScriptEnabled = true
-                        settings.mediaPlaybackRequiresUserGesture = false
-                        settings.loadWithOverviewMode = true
-                        settings.useWideViewPort = true
-                        settings.domStorageEnabled = true
-                        settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-                        loadUrl("https://www.youtube.com/embed/$videoKey?autoplay=1&playsinline=1&rel=0&modestbranding=1")
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(16f / 9f)
-                    .align(Alignment.Center)
-            )
-        }
+                    })
+                    initialize(
+                        object : com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener() {
+                            override fun onReady(youTubePlayer: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer) {
+                                youTubePlayer.loadVideo(videoKey, 0f)
+                            }
+                        },
+                        true
+                    )
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(16f / 9f)
+                .align(Alignment.Center)
+        )
 
         IconButton(
             onClick = onClose,
