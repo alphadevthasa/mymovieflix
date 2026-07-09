@@ -62,9 +62,9 @@ fun HeroBanner(
                     Brush.verticalGradient(
                         colors = listOf(
                             Color.Transparent,
-                            Color.Black.copy(alpha = 0.3f),
-                            Color.Black.copy(alpha = 0.8f),
-                            Color.Black
+                            Color.Black.copy(alpha = 0.1f),
+                            Color.Black.copy(alpha = 0.5f),
+                            Color.Black.copy(alpha = 0.85f)
                         ),
                         startY = 0f,
                         endY = Float.POSITIVE_INFINITY

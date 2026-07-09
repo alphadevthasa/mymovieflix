@@ -18,7 +18,8 @@ data class SearchUiState(
     val query: String = "",
     val genres: List<Genre> = emptyList(),
     val searchResults: List<MovieCardData> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val showResults: Boolean = false
 )
 
 @HiltViewModel
@@ -46,13 +47,16 @@ class SearchViewModel @Inject constructor(
         if (query.length >= 2) {
             searchMovies(query)
         } else {
-            _uiState.value = _uiState.value.copy(searchResults = emptyList())
+            _uiState.value = _uiState.value.copy(
+                searchResults = emptyList(),
+                showResults = false
+            )
         }
     }
 
     private fun searchMovies(query: String) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
+            _uiState.value = _uiState.value.copy(isLoading = true, showResults = true)
             val results = repository.searchMoviesList(query)
             _uiState.value = _uiState.value.copy(
                 searchResults = results.map { it.mapToCardData() },
@@ -63,7 +67,11 @@ class SearchViewModel @Inject constructor(
 
     fun searchByGenre(genreId: Int) {
         viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isLoading = true)
+            _uiState.value = _uiState.value.copy(
+                query = "",
+                isLoading = true,
+                showResults = true
+            )
             val results = repository.getMoviesByGenreList(genreId)
             _uiState.value = _uiState.value.copy(
                 searchResults = results.map { it.mapToCardData() },

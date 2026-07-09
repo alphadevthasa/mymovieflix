@@ -5,16 +5,20 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -86,41 +90,54 @@ fun SearchScreen(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        if (state.query.isBlank()) {
-            GenreChipsGrid(
-                genres = state.genres,
-                onGenreClick = { genreId, genreName ->
-                    viewModel.searchByGenre(genreId)
-                }
-            )
-        } else {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                items(state.searchResults) { movie ->
-                    MovieCardNetflix(
-                        posterUrl = movie.posterUrl,
-                        title = movie.title,
-                        rating = movie.rating,
-                        onClick = { onMovieClick(movie.id) }
-                    )
+        when {
+            state.isLoading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = Color(0xFFE50914))
                 }
             }
+            state.showResults -> {
+                if (state.searchResults.isEmpty()) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "No movies found",
+                            color = Color.Gray,
+                            fontSize = 16.sp
+                        )
+                    }
+                } else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        contentPadding = PaddingValues(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(state.searchResults) { movie ->
+                            MovieCardNetflix(
+                                posterUrl = movie.posterUrl,
+                                title = movie.title,
+                                rating = movie.rating,
+                                onClick = { onMovieClick(movie.id) }
+                            )
+                        }
+                    }
+                }
+            }
+            else -> {
+                GenreChipsGrid(
+                    genres = state.genres,
+                    onGenreClick = { genreId, _ ->
+                        viewModel.searchByGenre(genreId)
+                    }
+                )
+            }
         }
-
-        NetflixBottomNavigation(
-            items = listOf(
-                BottomNavItem.Home,
-                BottomNavItem.Search,
-                BottomNavItem.MyList,
-                BottomNavItem.Profile
-            ),
-            currentRoute = BottomNavItem.Search.route,
-            onItemClick = onNavItemClick
-        )
     }
 }
 
@@ -153,8 +170,8 @@ private fun GenreChipsGrid(
                         .fillMaxWidth()
                         .height(50.dp)
                         .background(
-                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-                            shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+                            color = Color(0xFF1A1A1A),
+                            shape = RoundedCornerShape(8.dp)
                         )
                         .clickable(onClick = { onGenreClick(genre.id, genre.name) }),
                     contentAlignment = Alignment.Center
