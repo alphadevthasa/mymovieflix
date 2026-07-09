@@ -20,7 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.HelpOutline
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
@@ -102,28 +102,28 @@ fun ProfileScreen(
 
             ProfileMenuItem(
                 icon = Icons.Filled.Star,
-                label = "My Ratings",
+                title = "My Ratings",
                 subtitle = "Movies you've rated",
                 onClick = {}
             )
 
             ProfileMenuItem(
                 icon = Icons.Filled.Download,
-                label = "Downloads",
+                title = "Downloads",
                 subtitle = "Available offline",
                 onClick = {}
             )
 
             ProfileMenuItem(
                 icon = Icons.Filled.Settings,
-                label = "App Settings",
+                title = "App Settings",
                 subtitle = "Language, playback, data usage",
                 onClick = {}
             )
 
             ProfileMenuItem(
-                icon = Icons.Filled.HelpOutline,
-                label = "Help",
+                icon = Icons.AutoMirrored.Filled.HelpOutline,
+                title = "Help",
                 subtitle = "FAQ & support",
                 onClick = {}
             )
