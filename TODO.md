@@ -1,0 +1,3 @@
+- [x] Love button di MovieDetail + sync ke MyList (MovieDetailViewModel, MovieDetailScreen)
+- [x] NetflixBottomNavigation aktif di Home/Search/MyList/Profile + default Home active (HomeScreen, SearchScreen, MyListScreen, ProfileScreen, NavGraph if needed)
+- [ ] Rapikan scroll tab bar Home (Trending/Top Rated/Now Playing) + styling Profile Netflix-style
