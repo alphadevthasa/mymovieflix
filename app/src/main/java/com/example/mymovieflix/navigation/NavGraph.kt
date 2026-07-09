@@ -39,12 +39,6 @@ fun NavGraph(navController: NavHostController = rememberNavController(), modifie
             SearchScreen(
                 onMovieClick = { movieId ->
                     navController.navigate(Screen.MovieDetail(movieId).createRoute())
-                },
-                onNavItemClick = { item ->
-                    navController.navigate(item.route) {
-                        launchSingleTop = true
-                        restoreState = true
-                    }
                 }
             )
         }
@@ -52,24 +46,11 @@ fun NavGraph(navController: NavHostController = rememberNavController(), modifie
             MyListScreen(
                 onMovieClick = { movieId ->
                     navController.navigate(Screen.MovieDetail(movieId).createRoute())
-                },
-                onNavItemClick = { item ->
-                    navController.navigate(item.route) {
-                        launchSingleTop = true
-                        restoreState = true
-                    }
                 }
             )
         }
         composable(Screen.Profile.route) {
-            ProfileScreen(
-                onNavItemClick = { item ->
-                    navController.navigate(item.route) {
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }
-            )
+            ProfileScreen()
         }
         composable(
             route = Screen.MovieList(0, "").route,

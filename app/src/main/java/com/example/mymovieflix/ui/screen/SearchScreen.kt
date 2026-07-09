@@ -20,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,8 +34,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.core.ui.component.MovieCardNetflix
-import com.example.core.ui.component.NetflixBottomNavigation
-import com.example.core.ui.component.BottomNavItem
 import com.example.mymovieflix.ui.theme.MyMovieFlixTheme
 import com.example.mymovieflix.ui.viewmodel.SearchViewModel
 
@@ -46,7 +43,6 @@ fun SearchScreenPreview() {
     MyMovieFlixTheme {
         SearchScreen(
             onMovieClick = {},
-            onNavItemClick = {},
             viewModel = SearchViewModel(FakeMovieRepository())
         )
     }
@@ -55,7 +51,6 @@ fun SearchScreenPreview() {
 @Composable
 fun SearchScreen(
     onMovieClick: (Int) -> Unit,
-    onNavItemClick: (BottomNavItem) -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()

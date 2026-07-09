@@ -22,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.core.ui.component.BottomNavItem
-import com.example.core.ui.component.NetflixBottomNavigation
 import com.example.core.ui.component.MovieCardNetflix
 import com.example.mymovieflix.ui.theme.MyMovieFlixTheme
 import com.example.mymovieflix.ui.viewmodel.MyListViewModel
@@ -34,7 +32,6 @@ fun MyListScreenPreview() {
     MyMovieFlixTheme {
         MyListScreen(
             onMovieClick = {},
-            onNavItemClick = {},
             viewModel = MyListViewModel(FakeMovieRepository())
         )
     }
@@ -43,7 +40,6 @@ fun MyListScreenPreview() {
 @Composable
 fun MyListScreen(
     onMovieClick: (Int) -> Unit,
-    onNavItemClick: (BottomNavItem) -> Unit,
     viewModel: MyListViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
@@ -89,11 +85,5 @@ fun MyListScreen(
                 }
             }
         }
-
-        NetflixBottomNavigation(
-            items = listOf(BottomNavItem.Home, BottomNavItem.Search, BottomNavItem.MyList, BottomNavItem.Profile),
-            currentRoute = BottomNavItem.MyList.route,
-            onItemClick = onNavItemClick
-        )
     }
 }

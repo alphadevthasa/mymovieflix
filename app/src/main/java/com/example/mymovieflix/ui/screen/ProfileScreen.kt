@@ -20,7 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import androidx.compose.material.icons.automirrored.filled.Help
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
@@ -37,18 +37,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.core.ui.component.BottomNavItem
 
 @Preview(showBackground = true, backgroundColor = 0xFF000000)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen(onNavItemClick = {})
+    ProfileScreen()
 }
 
 @Composable
-fun ProfileScreen(
-    onNavItemClick: (BottomNavItem) -> Unit
-) {
+fun ProfileScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -122,7 +119,7 @@ fun ProfileScreen(
             )
 
             ProfileMenuItem(
-                icon = Icons.AutoMirrored.Filled.HelpOutline,
+                icon = Icons.AutoMirrored.Filled.Help,
                 title = "Help",
                 subtitle = "FAQ & support",
                 onClick = {}
